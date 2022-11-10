@@ -7,10 +7,14 @@ import (
 
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello World!")
+		switch r.Method {
+		case http.MethodGet:
+			fmt.Fprintf(w, "GET!")
+		case http.MethodPost:
+			fmt.Fprintf(w, "POST!")
+		default:
+			fmt.Fprintf(w, "Method not Allowed")
+		}
 	})
-	fmt.Println("サーバー起動")
-	if err := http.ListenAndServe(":8081", nil); err != nil {
-		panic(err)
-	}
+
 }
